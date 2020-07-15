@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+chan start, finish, hold, release, all;
+int[0,1] L_L = 0;
+bool L_BUSY = false;
+
+clock global;</declaration>
+	<template>
+		<name x="5" y="5">Person</name>
+		<parameter>const int delay</parameter>
+		<declaration>// Place local declarations here.
+int[0,1] L_P = 0;
+// int[0,1] IS_MINE = 0;
+
+clock t;</declaration>
+		<location id="id0" x="-187" y="85" color="#ffa500">
+			<name x="-238" y="77">Start</name>
+		</location>
+		<location id="id1" x="-17" y="51">
+			<committed/>
+		</location>
+		<location id="id2" x="153" y="17">
+		</location>
+		<location id="id3" x="153" y="-85">
+		</location>
+		<location id="id4" x="-187" y="-85">
+			<committed/>
+		</location>
+		<location id="id5" x="153" y="153">
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-25" y="-102">all?</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-255" y="-8">release!</label>
+			<label kind="assignment" x="-289" y="-25">L_P = 1 - L_P</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="guard" x="161" y="-34">t &gt;= delay</label>
+			<label kind="synchronisation" x="170" y="-17">finish!</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-68" y="161">L_BUSY == true &amp;&amp;
+L_P == L_L</label>
+			<label kind="synchronisation" x="-34" y="127">start!</label>
+			<label kind="assignment" x="-68" y="144">t := 0</label>
+			<nail x="-17" y="119"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-51" y="297">t &gt;= delay</label>
+			<label kind="synchronisation" x="-34" y="263">finish!</label>
+			<label kind="assignment" x="-60" y="280">L_P = 1 - L_P</label>
+			<nail x="153" y="255"/>
+			<nail x="-187" y="255"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="60" y="9">start!</label>
+			<label kind="assignment" x="60" y="-8">t := 0</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-161" y="8">L_P == L_L &amp;&amp;
+L_BUSY == false</label>
+			<label kind="synchronisation" x="-144" y="43">hold!</label>
+		</transition>
+	</template>
+	<template>
+		<name>Bridge</name>
+		<location id="id6" x="-255" y="-17" color="#ffa500">
+			<name x="-306" y="-25">Zero</name>
+		</location>
+		<location id="id7" x="-119" y="-153">
+			<committed/>
+		</location>
+		<location id="id8" x="17" y="-17">
+			<name x="34" y="-25">Two</name>
+		</location>
+		<location id="id9" x="-119" y="119">
+			<name x="-136" y="136">One</name>
+		</location>
+		<location id="id10" x="-255" y="119">
+		</location>
+		<init ref="id6"/>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-246" y="42">all!</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id9"/>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="-204" y="127">finish?</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-42" y="-102">start?</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-42" y="51">finish?</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-237" y="-102">start?</label>
+		</transition>
+	</template>
+	<template>
+		<name>Lantern</name>
+		<location id="id11" x="-221" y="-17" color="#ffa500">
+			<name x="-272" y="-25">Free</name>
+		</location>
+		<location id="id12" x="17" y="-17">
+			<name x="42" y="-25">Busy</name>
+		</location>
+		<init ref="id11"/>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="-127" y="-85">release?</label>
+			<label kind="assignment" x="-153" y="-119">L_L = 1 - L_L,
+L_BUSY = false</label>
+			<nail x="-102" y="-68"/>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-119" y="34">hold?</label>
+			<label kind="assignment" x="-153" y="51">L_BUSY = true</label>
+			<nail x="-102" y="34"/>
+		</transition>
+	</template>
+	<system>const int d1 = 1;
+const int d2 = 2;
+const int d3 = 5;
+const int d4 = 10;
+
+Person1 = Person(d1);
+Person2 = Person(d2);
+Person3 = Person(d3);
+Person4 = Person(d4);
+
+// List one or more processes to be composed into a system.
+system Person1, Person2, Person3, Person4, Lantern, Bridge;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; ((Person1.L_P == 1 and Person2.L_P == 1 and Person3.L_P == 1 and Person4.L_P == 1) and global == 17)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] not ((Person1.L_P == 1 and Person2.L_P == 1 and Person3.L_P == 1 and Person4.L_P == 1) and global &lt; 17)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>

@@ -1,0 +1,13 @@
+\babel@toc {portuges}{}
+\contentsline {section}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}% 
+\contentsline {paragraph}{Enunciado}{2}% 
+\contentsline {paragraph}{Objetivo}{2}% 
+\contentsline {section}{\numberline {2}Modela\IeC {\c c}\IeC {\~a}o}{3}% 
+\contentsline {subsection}{\numberline {2.1}\textit {Lantern}}{3}% 
+\contentsline {subsection}{\numberline {2.2}\textit {Bridge}}{4}% 
+\contentsline {subsection}{\numberline {2.3}\textit {Person}}{5}% 
+\contentsline {section}{\numberline {3}Verifica\IeC {\c c}\IeC {\~a}o}{6}% 
+\contentsline {paragraph}{N\IeC {\~a}o existe \textit {deadlock}:}{6}% 
+\contentsline {paragraph}{\IeC {\'E} poss\IeC {\'\i }vel que todos os aventureiros estejam do outro lado da ponte em 17 minutos:}{6}% 
+\contentsline {paragraph}{\IeC {\'E} imposs\IeC {\'\i }vel que todos os aventureiros estejam no outro lado da ponte em menos de 17 minutos:}{7}% 
+\contentsline {section}{\numberline {4}Conclus\IeC {\~a}o}{7}% 
